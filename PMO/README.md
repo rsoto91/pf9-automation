@@ -12,6 +12,7 @@ export DU_FQDN=mydu.platform9.net
 export OS_USERNAME="user@email.com"
 export OS_PASSWORD="strongpass"
 export REGION='compute'
+export DNS_DOMAIN='nova.local'
 ###################################################
 
 
@@ -105,7 +106,8 @@ curl  -X 'PUT'  -H "X-Auth-Token: $TOKEN"  -H 'Content-Type: application/json;ch
 # Neutron DHCP Config
 curl  -X 'PUT'  -H "X-Auth-Token: $TOKEN"  -H 'Content-Type: application/json;charset=UTF-8'  \
 "https://$DU_FQDN/resmgr/v1/hosts/$HOST_ID/roles/pf9-neutron-dhcp-agent" \
--d '{"dnsmasq_dns_servers": "8.8.8.8", "dns_domain": "platform9.horse"}'
+-d "{\"dnsmasq_dns_servers\": \"8.8.8.8\", \"dns_domain\": \"$DNS_DOMAIN\"}"
+
 
 # Neutron Metadata Agent Config
 curl  -X 'PUT'  -H "X-Auth-Token: $TOKEN"  -H 'Content-Type: application/json;charset=UTF-8'  \
