@@ -4,17 +4,25 @@
 
 ### I. Create a Cluster Object 
 Create a cluster object. Nodes can join this new cluster. The output of this command will contain the UUID of the cluster object, which will be referenced in a later step. 
-1. Obtain an auth token. Set the `OS_AUTH_URL`, `OS_USERNAME`, `OS_PASSWORD`, `OS_PROJECT_NAME` options. The final command will save the authentication token as an environment variable.  
+1) Obtain an auth token. Set the `DU_FQDN`, `OS_USERNAME`, `OS_PASSWORD` options. The final command will save the authentication token as an environment variable.  
 ```
-export OS_AUTH_URL="https://examplecustomer.platform9.net/keystone/v3"
+export DU_FQDN="example.platform9.net"
 export OS_USERNAME="user@email.com"
 export OS_PASSWORD="strongpass"
 
 export TOKEN=$(curl -D - -sH "Content-Type:application/json" https://$DU_FQDN/keystone/v3/auth/tokens -d '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"'$OS_USERNAME'","domain":{"name": "Default"},"password":"'$OS_PASSWORD'"}}},"scope":{"project":{"domain":{"name":"Default"},"name":"'service'"}}}}' | grep -Ei '^X-Subject-Token' | awk '{print $2}' | tr -d '\r')
 ```
-2. Create an empty cluster 
+2) Create an empty cluster
+
+Prior to creating the cluster, you will have to run API calls to get values for the following:
+* **project_uuid** to be used for the two subsequent commands: 
+```curl -s -k -H "X-Auth-Token: $TOKEN" https://$DU_FQDN/keystone/v3/projects | jq```
+* **kubeRoleVersion**: 
+```curl -s -k -H "X-Auth-Token: $TOKEN" https://$DU_FQDN/qbert/v4/<YOUR_PROJECT_UUID>/clusters/supportedRoleVersions | jq -r '.roles[].roleVersion'```
+* **nodePoolUuid**: 
+```curl -s -k -H "X-Auth-Token: $TOKEN" https://$DU_FQDN/qbert/v4/<YOUR_PROJECT_ID>/nodePools | jq -r '.[] | select(.name == "defaultPool") | .uuid'```
 ```
-curl --request POST --url https://<mgmt_plane_fqdn>/qbert/v4/<project_uuid>/clusters --header "X-Auth-Token: $TOKEN" --header 'content-type: application/json' --data '{
+curl --request POST --url https://$DU_FQDN/qbert/v4/<project_uuid>/clusters --header "X-Auth-Token: $TOKEN" --header 'content-type: application/json' --data '{
 "allowWorkloadsOnMaster": false,
 "calicoIPv4DetectionMethod": "first-found",
 "calicoIpIpMode": "Never",
@@ -30,7 +38,6 @@ curl --request POST --url https://<mgmt_plane_fqdn>/qbert/v4/<project_uuid>/clus
 "servicesCidr": "10.180.240.0/22"
 }'
 ```
-(TODO: Add API commands to get details on `nodePoolUuid`, `kubeRoleVersion` and project UUID)
  
 
 ### II. Use cloud-init to deploy a PMK node
