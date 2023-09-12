@@ -3,7 +3,7 @@
 ## Steps
 
 #### 1. Update the following options in the script: `DU_FQDN`, `OS_USERNAME`, `OS_PASSWORD`, `REGION`, `DNS_DOMAIN`
-* `DU_FQDN`: Management plane URL. Exclude https:// (example: `acme.platform9.net`)
+* `DU_FQDN`: Management plane URL. Exclude https:// protocol. Example: `acme.platform9.net`
 * `OS_USERNAME`: Username of an admin account associated with the management plane
 * `OS_PASSWORD`: Admin user password
 *  `REGION`: The region name can be found on the top-right corner of the Platform9 UI
