@@ -3,7 +3,7 @@
 ## Steps
 
 ### I. Create a Cluster Object 
-Create a cluster object. The new nodes will be associated with this cluster. The output of this command will contain the UUID of the cluster object, which will be referenced in a later step. 
+Create a cluster object. Nodes can join this new cluster. The output of this command will contain the UUID of the cluster object, which will be referenced in a later step. 
 1. Obtain an auth token. Set the `OS_AUTH_URL`, `OS_USERNAME`, `OS_PASSWORD`, `OS_PROJECT_NAME` options. The final command will save the authentication token as an environment variable.  
 ```
 export OS_AUTH_URL="https://examplecustomer.platform9.net/keystone/v3"
