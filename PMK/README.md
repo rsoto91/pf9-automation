@@ -39,6 +39,7 @@ This script downloads and executes the Platform9 CLI, pf9ctl, in non-interactive
 1. Apply the following cloud-config script to the virtual machine or bare metal instance you are provisioning. 
 Update the `pf9ctl config set` command with the management plane FQDN, an admin username and password, project name, and region. (Default project name is `service`, and default region name is `RegionOne`)
 Update the `attach-node` command with the UUID of the cluster object created in the previous step. 
+Ensure config drive option is enabled. 
 ```
 #cloud-config
 password: winterwonderland
