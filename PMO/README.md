@@ -2,7 +2,12 @@
 
 ## Steps
 
-#### 1. Update the following options in the script: `DU_FQDN`, `OS_USERNAME`, `OS_PASSWORD`, `REGION`
+#### 1. Update the following options in the script: `DU_FQDN`, `OS_USERNAME`, `OS_PASSWORD`, `REGION`, `DNS_DOMAIN`
+* `DU_FQDN`: Management plane URL. Exclude https:// (example: `acme.platform9.net`)
+* `OS_USERNAME`: Username of an admin account associated with the management plane
+* `OS_PASSWORD`: Admin user password
+*  `REGION`: The region name can be found on the top-right corner of the Platform9 UI
+* `DNS_DOMAIN`: Specify the DNS domain name for your organization. If the DNS domain is specified, a VM's FQDN will be <vm_name>.<dns_domain_name>. If not specified, the default OpenStack VM FQDN is host-<hyphen_separated_vm_ip_address>.openstacklocal. 
 ```
 #!/bin/bash
 set -x
@@ -12,7 +17,7 @@ export DU_FQDN=mydu.platform9.net
 export OS_USERNAME="user@email.com"
 export OS_PASSWORD="strongpass"
 export REGION='compute'
-export DNS_DOMAIN='nova.local'
+export DNS_DOMAIN='openstacklocal'
 ###################################################
 
 
