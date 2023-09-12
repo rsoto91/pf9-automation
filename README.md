@@ -4,4 +4,4 @@ Welcome to the platform9-automation repository! This repository provides some us
 
 
 ## [Deploy a PMO Host](PMO/)
-## Deploy a PMK Node
+## [Deploy a PMK Host](PMK/)
